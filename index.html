@@ -3,26 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWF Player</title>
-    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    <title>SWF Player with Ruffle</title>
 </head>
 <body>
     <h1>Upload and Play SWF File</h1>
-    <input type="file" id="fileInput" accept=".swf">
-    <br><br>
-    <div id="flashPlayer" style="width: 100%; height: 600px; border: 1px solid #000;"></div>
+    <input type="file" id="swfUpload" accept=".swf">
+    <div id="container" style="width: 800px; height: 600px; border: 1px solid #000;"></div>
 
+    <script src="path/to/ruffle/ruffle.js"></script>
     <script>
-        const fileInput = document.getElementById('fileInput');
-        const flashPlayer = document.getElementById('flashPlayer');
+        window.RufflePlayer = window.RufflePlayer || {};
+        window.addEventListener("load", (event) => {
+            const ruffle = window.RufflePlayer.newest();
+            const player = ruffle.createPlayer();
+            const container = document.getElementById("container");
+            container.appendChild(player);
 
-        fileInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const objectUrl = URL.createObjectURL(file);
-                flashPlayer.innerHTML = `<embed src="${objectUrl}" width="100%" height="100%">`;
-            }
+            const swfUpload = document.getElementById("swfUpload");
+            swfUpload.addEventListener("change", (event) => {
+                const file = event.target.files[0];
+                if (file && file.type === "application/x-shockwave-flash") {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const arrayBuffer = e.target.result;
+                        player.load(arrayBuffer);
+                    };
+                    reader.readAsArrayBuffer(file);
+                } else {
+                    alert("Please upload a valid .swf file.");
+                }
+            });
         });
     </script>
 </body>
 </html>
+
