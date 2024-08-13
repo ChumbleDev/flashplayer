@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruffle Example</title>
+    <title>Ruffle SWF Loader</title>
     <script src="path/to/ruffle/ruffle.js"></script>
     <style>
         #container { width: 800px; height: 600px; border: 1px solid #000; }
     </style>
 </head>
 <body>
+    <input type="file" id="fileInput" accept=".swf">
     <div id="container"></div>
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
@@ -18,10 +19,18 @@
             const player = ruffle.createPlayer();
             const container = document.getElementById("container");
             container.appendChild(player);
-            player.load("movie.swf");
+            
+            document.getElementById("fileInput").addEventListener("change", (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    player.load(url);
+                }
+            });
         });
     </script>
 </body>
 </html>
+
 
 
