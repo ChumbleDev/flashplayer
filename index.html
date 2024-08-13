@@ -10,7 +10,8 @@
     </style>
 </head>
 <body>
-    <input type="file" id="fileInput" accept=".swf">
+    <button id="loadButton">Load SWF</button>
+    <input type="file" id="fileInput" accept=".swf" style="display:none;">
     <div id="container"></div>
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
@@ -20,6 +21,10 @@
             const container = document.getElementById("container");
             container.appendChild(player);
             
+            document.getElementById("loadButton").addEventListener("click", () => {
+                document.getElementById("fileInput").click();
+            });
+
             document.getElementById("fileInput").addEventListener("change", (event) => {
                 const file = event.target.files[0];
                 if (file) {
@@ -31,6 +36,7 @@
     </script>
 </body>
 </html>
+
 
 
 
