@@ -3,38 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWF Player with Ruffle</title>
+    <title>Ruffle Example</title>
+    <script src="path/to/ruffle/ruffle.js"></script>
+    <style>
+        #container { width: 800px; height: 600px; border: 1px solid #000; }
+    </style>
 </head>
 <body>
-    <h1>Upload and Play SWF File</h1>
-    <input type="file" id="swfUpload" accept=".swf">
-    <div id="container" style="width: 800px; height: 600px; border: 1px solid #000;"></div>
-
-    <script src="path/to/ruffle/ruffle.js"></script>
+    <div id="container"></div>
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
-        window.addEventListener("load", (event) => {
+        window.addEventListener("load", () => {
             const ruffle = window.RufflePlayer.newest();
             const player = ruffle.createPlayer();
             const container = document.getElementById("container");
             container.appendChild(player);
-
-            const swfUpload = document.getElementById("swfUpload");
-            swfUpload.addEventListener("change", (event) => {
-                const file = event.target.files[0];
-                if (file && file.type === "application/x-shockwave-flash") {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const arrayBuffer = e.target.result;
-                        player.load(arrayBuffer);
-                    };
-                    reader.readAsArrayBuffer(file);
-                } else {
-                    alert("Please upload a valid .swf file.");
-                }
-            });
+            player.load("movie.swf");
         });
     </script>
 </body>
 </html>
+
 
