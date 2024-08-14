@@ -48,7 +48,8 @@
 
             document.getElementById("deloadButton").addEventListener("click", () => {
                 if (isSwfLoaded) {
-                    player.unload();
+                    player.stop();
+                    container.innerHTML = ""; // Clear the player from the container
                     isSwfLoaded = false;
                 } else {
                     alert("No SWF is loaded");
@@ -67,13 +68,15 @@
                 container.style.backgroundImage = 'none';
             } else if (theme === 'space') {
                 container.style.backgroundColor = 'black'; // Fallback color
-                container.style.backgroundImage = 'url("https://raw.githubusercontent.com/ChumbleDev/flashplayer/main/images/space.png")';
+                container.style.backgroundImage = 'url(main/images/space.png)';
                 container.style.backgroundSize = 'cover';
             }
         }
     </script>
 </body>
 </html>
+
+
 
 
 
