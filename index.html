@@ -14,6 +14,7 @@
     <div class="button-container">
         <button id="loadButton">Load SWF</button>
         <input type="file" id="fileInput" accept=".swf" style="display:none;">
+        <button id="deloadButton">Deload SWF</button>
     </div>
     <div class="button-container">
         <button onclick="changeTheme('white')">White Theme</button>
@@ -23,9 +24,10 @@
     <div id="container"></div>
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
+        let player;
         window.addEventListener("load", () => {
             const ruffle = window.RufflePlayer.newest();
-            const player = ruffle.createPlayer();
+            player = ruffle.createPlayer();
             const container = document.getElementById("container");
             container.appendChild(player);
 
@@ -38,6 +40,14 @@
                 if (file) {
                     const url = URL.createObjectURL(file);
                     player.load(url);
+                }
+            });
+
+            document.getElementById("deloadButton").addEventListener("click", () => {
+                if (player.currentMovieUrl) {
+                    player.unload();
+                } else {
+                    alert("No SWF is loaded");
                 }
             });
         });
@@ -60,6 +70,7 @@
     </script>
 </body>
 </html>
+
 
 
 
