@@ -25,6 +25,8 @@
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
         let player;
+        let isSwfLoaded = false;
+
         window.addEventListener("load", () => {
             const ruffle = window.RufflePlayer.newest();
             player = ruffle.createPlayer();
@@ -40,12 +42,14 @@
                 if (file) {
                     const url = URL.createObjectURL(file);
                     player.load(url);
+                    isSwfLoaded = true;
                 }
             });
 
             document.getElementById("deloadButton").addEventListener("click", () => {
-                if (player.currentMovieUrl) {
+                if (isSwfLoaded) {
                     player.unload();
+                    isSwfLoaded = false;
                 } else {
                     alert("No SWF is loaded");
                 }
@@ -70,6 +74,7 @@
     </script>
 </body>
 </html>
+
 
 
 
